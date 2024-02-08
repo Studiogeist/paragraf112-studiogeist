@@ -92,24 +92,19 @@
     Promise.all(fetchPromises)
         .then(svgContents => {
             let xCoordinate = 0;
-            let totalWidth = 0;
+            const fixedWidth = 100; // Set the width of each SVG element (adjust as needed)
 
             const svgElements = svgContents.map((svgContent, index) => {
-                const tempSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                tempSVG.innerHTML = svgContent;
-                const bbox = tempSVG.getBBox();
-                const width = bbox.width;
-
-                totalWidth += width + (index < svgContents.length - 1 ? 5 : 0);
-
                 const result = `<g transform="translate(${xCoordinate}, 0)">${svgContent}</g>`;
-                xCoordinate += width + (index < svgContents.length - 1 ? 5 : 0); // Adjust spacing
+                xCoordinate += fixedWidth + (index < svgContents.length - 1 ? 5 : 0); // Adjust spacing
                 return result;
             }).join('\n');
 
+            const totalWidth = xCoordinate - 5; // Subtract the last spacing
+
             const concatenatedSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
                 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${totalWidth} 75">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="${totalWidth}" height="75" viewBox="0 0 ${totalWidth} 75">
                     ${svgElements}
                 </svg>`;
 
@@ -126,6 +121,7 @@
         })
         .catch(error => console.error('Error fetching SVG content:', error));
 }
+
 
 
 

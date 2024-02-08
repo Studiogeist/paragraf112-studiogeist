@@ -19,7 +19,15 @@ body {
     gap: 5px;
 }
 
-.svg-container {}
+.svg-container {
+    z-index: 1;
+}
+
+.svg-container-bg {
+    position: fixed;
+    z-index: 0;
+    left: 50%;
+}
 
 object {
     width: auto;
@@ -131,4 +139,8 @@ button:hover {
 
 .heading-112 {
     font-size: 32px;
+}
+
+.button-wrapper {
+    margin-top: 150px;
 }

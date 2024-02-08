@@ -49,7 +49,9 @@
             <div id="logo-container">
                 <!-- SVG placeholders will be added here -->
             </div>
+            <div class="button-wrapper">
             <button onclick="generateLogo()">Ny variant <iconify-icon icon="material-symbols-light:arrow-split-rounded" width="28" height="28"></iconify-icon></button>
+        </div>            
         </div>
     </div>
     
@@ -87,6 +89,7 @@
             const filteredFiles = svgFiles.filter(file => file.startsWith(startingWith));
             return filteredFiles[Math.floor(Math.random() * filteredFiles.length)];
         }
+        
 
         function generateLogo() {
             currentLogo[0] = getRandomSVG('1');
@@ -100,19 +103,30 @@
         }
 
         function displayLogo() {
-            // Clear previous SVGs
-            logoContainer.innerHTML = '';
+    // Clear previous SVGs
+    logoContainer.innerHTML = '';
 
-            currentLogo.forEach((svgFile) => {
-                const svgContainer = document.createElement('div');
-                svgContainer.className = 'svg-container';
-                const svgElement = document.createElement('object');
-                svgElement.data = 'assets/' + svgFile;
-                svgElement.type = 'image/svg+xml';
-                svgContainer.appendChild(svgElement);
-                logoContainer.appendChild(svgContainer);
-            });
-        }
+    // Add background SVG
+    const bgContainer = document.createElement('div');
+    bgContainer.className = 'svg-container-bg';
+    const bgElement = document.createElement('object');
+    bgElement.data = 'assets/LOGO-BG.svg'; // Replace with the path to your background SVG
+    bgElement.type = 'image/svg+xml';
+    bgContainer.appendChild(bgElement);
+    logoContainer.appendChild(bgContainer);
+
+    // Add generated SVGs (numbers) on top
+    currentLogo.forEach((svgFile) => {
+        const svgContainer = document.createElement('div');
+        svgContainer.className = 'svg-container';
+        const svgElement = document.createElement('object');
+        svgElement.data = 'assets/' + svgFile;
+        svgElement.type = 'image/svg+xml';
+        svgContainer.appendChild(svgElement);
+        logoContainer.appendChild(svgContainer);
+    });
+}
+
 
         // Function to export SVG
         function exportSVG() {

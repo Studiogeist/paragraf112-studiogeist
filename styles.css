@@ -42,10 +42,11 @@ object {
     width: 250px;
     position: fixed;
     height: -webkit-fill-available;
-    padding: 20px;
+    padding: 32px;
     display: flex;
     justify-content: space-between;
     border-right: 1px solid lightgray;
+    background-color: white;
 }
 
 .option-container {
@@ -63,6 +64,11 @@ object {
 button {
     padding: 20px;
     min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 180px;
 }
 
 .option-format {

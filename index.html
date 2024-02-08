@@ -78,13 +78,50 @@
         }
 
         function exportSVG() {
-            // Logic to export the currentLogo as SVG
-            console.log('Exporting SVG:', currentLogo);
+            const svgContent = currentLogo.map(svgFile => `<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n${fetch('assets/' + svgFile).then(response => response.text())}`).join('\n');
+            
+            const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'logo.svg';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
         function exportPNG() {
-            // Logic to export the currentLogo as PNG
-            console.log('Exporting PNG:', currentLogo);
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            const images = currentLogo.map(svgFile => new Image());
+            
+            // Load each SVG as an image
+            Promise.all(currentLogo.map((svgFile, index) => {
+                return new Promise(resolve => {
+                    images[index].onload = () => resolve();
+                    images[index].src = 'assets/' + svgFile;
+                });
+            })).then(() => {
+                canvas.width = images.reduce((width, image) => Math.max(width, image.width), 0);
+                canvas.height = images.reduce((height, image) => height + image.height, 0);
+
+                let yOffset = 0;
+                images.forEach(image => {
+                    context.drawImage(image, 0, yOffset);
+                    yOffset += image.height;
+                });
+
+                const url = canvas.toDataURL('image/png');
+
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'logo.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
         }
 
         // Initial generation

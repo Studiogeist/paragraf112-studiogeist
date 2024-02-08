@@ -99,7 +99,7 @@
                 ${svgContents.map((svgContent, index) => {
                     const width = 100; // Set the width of each SVG element (adjust as needed)
                     const result = `<g transform="translate(${xCoordinate}, 0)">${svgContent}</g>`;
-                    xCoordinate += width + (index < svgContents.length - 1 ? 5 : 0); // Adjust spacing
+                    xCoordinate += width + (index < svgContents.length - 1 ? 0 : 0); // Adjust spacing
                     return result;
                 }).join('\n')}
             </svg>`;

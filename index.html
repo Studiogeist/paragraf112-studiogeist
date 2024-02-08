@@ -87,7 +87,7 @@
         function exportSVG() {
     const svgElements = Array.from(logoContainer.querySelectorAll('.svg-container')).map((svgContainer, index) => {
         const svgContent = svgContainer.querySelector('object').contentDocument.documentElement.innerHTML;
-        const spacing = index < 3 ? 5 : 0; // Add spacing between the first two SVGs
+        const spacing = index < 0 ? 0 : 0; // Add spacing between the first two SVGs
         return `<g transform="translate(${index * 100 + spacing}, 0)">${svgContent}</g>`;
     }).join('\n');
 

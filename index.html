@@ -84,30 +84,46 @@
             });
         }
 
-        function exportSVG() {
+ // Function to export SVG
+function exportSVG() {
+    // Select all elements with the class 'svg-container' within the 'logoContainer'
     const svgElements = Array.from(logoContainer.querySelectorAll('.svg-container')).map((svgContainer, index) => {
+        // Extract the inner HTML content of the SVG from the 'object' element inside each 'svg-container'
         const svgContent = svgContainer.querySelector('object').contentDocument.documentElement.innerHTML;
-        const spacing = index < 0 ? 0 : 0; // Add spacing between the first two SVGs
+        // Add spacing between the first two SVGs (Note: The 'spacing' variable is always 0 in the current code)
+        const spacing = index < 0 ? 0 : 0; 
+        // Create a group element with a transform attribute to position each SVG horizontally
         return `<g transform="translate(${index * 100 + spacing}, 0)">${svgContent}</g>`;
-    }).join('\n');
+    }).join('\n'); // Join the array of SVG elements into a single string with line breaks
 
+    // Concatenate the SVG elements into a complete SVG document
     const concatenatedSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
         <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${200} 75" preserveAspectRatio="xMinYMin meet">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${130} 75" preserveAspectRatio="xMinYMin meet">
             ${svgElements}
         </svg>`;
 
+    // Create a Blob containing the SVG data
     const blob = new Blob([concatenatedSVG], { type: 'image/svg+xml' });
+    // Create a URL for the Blob
     const url = URL.createObjectURL(blob);
 
+    // Create a link element
     const a = document.createElement('a');
+    // Set the link's href attribute to the SVG URL
     a.href = url;
+    // Set the download attribute to specify the default file name
     a.download = '112-din-logovariant.svg';
+    // Append the link to the document body
     document.body.appendChild(a);
+    // Simulate a click on the link to trigger the download
     a.click();
+    // Remove the link element from the document body
     document.body.removeChild(a);
+    // Revoke the URL to free up resources
     URL.revokeObjectURL(url);
 }
+
 
 
 

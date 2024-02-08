@@ -83,44 +83,40 @@
             });
         }
 
+  function exportSVG() {
+    const fetchPromises = currentLogo.map(svgFile =>
+        fetch('assets/' + svgFile)
+            .then(response => response.text())
+    );
 
-        function exportSVG() {
-    const svgContainer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svgContainer.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    Promise.all(fetchPromises)
+        .then(svgContents => {
+            let xCoordinate = 0;
 
-    let xCoordinate = 0;
+            const concatenatedSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+            <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${xCoordinate} 75">
+                ${svgContents.map((svgContent, index) => {
+                    const width = 100; // Set the width of each SVG element (adjust as needed)
+                    const result = `<g transform="translate(${xCoordinate}, 0)">${svgContent}</g>`;
+                    xCoordinate += width + (index < svgContents.length - 1 ? 5 : 0); // Adjust spacing
+                    return result;
+                }).join('\n')}
+            </svg>`;
 
-    currentLogo.forEach((svgFile, index) => {
-        const svgElement = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        svgElement.setAttribute("transform", `translate(${xCoordinate}, 0)`);
+            const blob = new Blob([concatenatedSVG], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
 
-        const tempSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        tempSVG.innerHTML = svgFile;
-
-        const bbox = tempSVG.getBBox();
-        const width = bbox.width;
-
-        svgElement.innerHTML = svgFile;
-        svgContainer.appendChild(svgElement);
-
-        xCoordinate += width + 5; // Add 5px spacing
-    });
-
-    const svgString = new XMLSerializer().serializeToString(svgContainer);
-    const blob = new Blob([svgString], { type: "image/svg+xml" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "logo.svg";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '112-din-logovariant.svg';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        })
+        .catch(error => console.error('Error fetching SVG content:', error));
 }
-
-
-
 
 
 

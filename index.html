@@ -91,7 +91,7 @@ function exportSVG() {
         // Extract the inner HTML content of the SVG from the 'object' element inside each 'svg-container'
         const svgContent = svgContainer.querySelector('object').contentDocument.documentElement.innerHTML;
         // Add spacing between the first two SVGs (Note: The 'spacing' variable is always 0 in the current code)
-        const spacing = index < 0 ? -100 : 0; 
+        const spacing = index < -100 ? 0 : 0; 
         // Create a group element with a transform attribute to position each SVG horizontally
         return `<g transform="translate(${index * 100 + spacing}, 0)">${svgContent}</g>`;
     }).join('\n'); // Join the array of SVG elements into a single string with line breaks

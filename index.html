@@ -91,7 +91,7 @@ function exportSVG() {
         // Extract the inner HTML content of the SVG from the 'object' element inside each 'svg-container'
         const svgContent = svgContainer.querySelector('object').contentDocument.documentElement.innerHTML;
         // Add spacing between the first two SVGs (Note: The 'spacing' variable is always 0 in the current code)
-        const spacing = index < 0 ? 0 : 0; 
+        const spacing = index < 0 ? 0 : -50; 
         // Create a group element with a transform attribute to position each SVG horizontally
         return `<g transform="translate(${index * 100 + spacing}, 0)">${svgContent}</g>`;
     }).join('\n'); // Join the array of SVG elements into a single string with line breaks
@@ -99,7 +99,7 @@ function exportSVG() {
     // Concatenate the SVG elements into a complete SVG document
     const concatenatedSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
         <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${130} 75" preserveAspectRatio="xMinYMin meet">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${200} 75" preserveAspectRatio="xMinYMin meet">
             ${svgElements}
         </svg>`;
 

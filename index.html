@@ -13,7 +13,6 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            width: 100%;
         }
         .svg-container {
         }
@@ -89,24 +88,16 @@
 function exportSVG() {
     // Select all elements with the class 'svg-container' within the 'logoContainer'
     const svgContainers = Array.from(logoContainer.querySelectorAll('.svg-container'));
-    const totalContainers = svgContainers.length;
-    
-    // Calculate the total width of all SVG containers and the desired gap
-    const totalWidth = totalContainers * 100; // Assuming each container has a width of 100 units
-    const gap = 5; // Desired gap between containers
-
-    // Calculate the actual spacing to distribute equally between all containers
-    const spacing = (totalContainers - 1) * gap;
 
     // Calculate the total width of the resulting SVG
-    const svgWidth = totalWidth + spacing;
+    const svgWidth = svgContainers.length * 100 + (svgContainers.length - 1) * 5; // Assuming each container has a width of 100 units and a gap of 5 units
 
     // Map each SVG container to its transformed content
     const svgElements = svgContainers.map((svgContainer, index) => {
         // Extract the inner HTML content of the SVG from the 'object' element inside each 'svg-container'
         const svgContent = svgContainer.querySelector('object').contentDocument.documentElement.innerHTML;
         // Calculate the horizontal translation for each SVG container
-        const translationX = index * (100 + gap);
+        const translationX = index * (100 + 5); // Assuming each container has a width of 100 units and a gap of 5 units
         // Create a group element with a transform attribute to position each SVG horizontally
         return `<g transform="translate(${translationX}, 0)">${svgContent}</g>`;
     }).join('\n'); // Join the array of SVG elements into a single string with line breaks
@@ -138,6 +129,7 @@ function exportSVG() {
     // Revoke the URL to free up resources
     URL.revokeObjectURL(url);
 }
+
 
 
 

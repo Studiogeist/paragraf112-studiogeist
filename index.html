@@ -90,8 +90,10 @@
             const concatenatedSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${xCoordinate} 75">
-                ${svgContents.map(async (svgContent, index) => {
-                    const width = await getSVGWidth(svgContent);
+                ${svgContents.map((svgContent, index) => {
+                    const tempSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    tempSVG.innerHTML = svgContent;
+                    const width = tempSVG.getBBox().width;
                     const result = `<g transform="translate(${xCoordinate}, 0)">${svgContent}</g>`;
                     xCoordinate += width + (index < svgContents.length - 1 ? 5 : 0); // Adjust spacing
                     return result;
@@ -110,24 +112,6 @@
             URL.revokeObjectURL(url);
         })
         .catch(error => console.error('Error fetching SVG content:', error));
-}
-
-async function getSVGWidth(svgContent) {
-    return new Promise(resolve => {
-        const tempSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        tempSVG.setAttribute('width', '0');
-        tempSVG.setAttribute('height', '0');
-        tempSVG.innerHTML = svgContent;
-
-        document.body.appendChild(tempSVG);
-
-        const bbox = tempSVG.getBBox();
-        const width = bbox.width;
-
-        document.body.removeChild(tempSVG);
-
-        resolve(width);
-    });
 }
 
 

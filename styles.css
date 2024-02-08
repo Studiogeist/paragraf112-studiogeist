@@ -103,7 +103,7 @@ input[type="radio"]:checked+label::before {
 
 button {
     background-color: transparent;
-    outline: 1px solid black;
+    outline: 1px solid #000000;
     color: black;
     border: 0px;
     border-radius: 10px;
@@ -121,4 +121,8 @@ button:hover {
     opacity: 0.5;
     letter-spacing: 0.5px;
     font-size: 16px;
+}
+
+.heading-112 {
+    font-size: 32px;
 }

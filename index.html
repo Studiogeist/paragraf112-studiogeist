@@ -84,22 +84,36 @@
             });
         }
 
- // Function to export SVG
+// Function to export SVG
 function exportSVG() {
     // Select all elements with the class 'svg-container' within the 'logoContainer'
-    const svgElements = Array.from(logoContainer.querySelectorAll('.svg-container')).map((svgContainer, index) => {
+    const svgContainers = Array.from(logoContainer.querySelectorAll('.svg-container'));
+    const totalContainers = svgContainers.length;
+    
+    // Calculate the total width of all SVG containers and the desired gap
+    const totalWidth = totalContainers * 100; // Assuming each container has a width of 100 units
+    const gap = 5; // Desired gap between containers
+
+    // Calculate the actual spacing to distribute equally between all containers
+    const spacing = (totalContainers - 1) * gap;
+
+    // Calculate the total width of the resulting SVG
+    const svgWidth = totalWidth + spacing;
+
+    // Map each SVG container to its transformed content
+    const svgElements = svgContainers.map((svgContainer, index) => {
         // Extract the inner HTML content of the SVG from the 'object' element inside each 'svg-container'
         const svgContent = svgContainer.querySelector('object').contentDocument.documentElement.innerHTML;
-        // Add spacing between the first two SVGs (Note: The 'spacing' variable is always 0 in the current code)
-        const spacing = index < -100 ? 0 : 0; 
+        // Calculate the horizontal translation for each SVG container
+        const translationX = index * (100 + gap);
         // Create a group element with a transform attribute to position each SVG horizontally
-        return `<g transform="translate(${index * 100 + spacing}, 0)">${svgContent}</g>`;
+        return `<g transform="translate(${translationX}, 0)">${svgContent}</g>`;
     }).join('\n'); // Join the array of SVG elements into a single string with line breaks
 
     // Concatenate the SVG elements into a complete SVG document
     const concatenatedSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
         <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${200} 75" preserveAspectRatio="xMinYMin meet">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${svgWidth} 75" preserveAspectRatio="xMinYMin meet">
             ${svgElements}
         </svg>`;
 
@@ -123,6 +137,7 @@ function exportSVG() {
     // Revoke the URL to free up resources
     URL.revokeObjectURL(url);
 }
+
 
 
 

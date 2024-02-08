@@ -78,7 +78,14 @@
         }
 
         function exportSVG() {
-            const svgContent = currentLogo.map(svgFile => `<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n${fetch('assets/' + svgFile).then(response => response.text())}`).join('\n');
+    const fetchPromises = currentLogo.map(svgFile =>
+        fetch('assets/' + svgFile)
+            .then(response => response.text())
+    );
+
+    Promise.all(fetchPromises)
+        .then(svgContents => {
+            const svgContent = svgContents.join('\n');
             
             const blob = new Blob([svgContent], { type: 'image/svg+xml' });
             const url = URL.createObjectURL(blob);
@@ -90,7 +97,10 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-        }
+        })
+        .catch(error => console.error('Error fetching SVG content:', error));
+}
+
 
         function exportPNG() {
             const canvas = document.createElement('canvas');

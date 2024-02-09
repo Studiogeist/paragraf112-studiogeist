@@ -161,7 +161,8 @@ button:hover {
 }
 
 .button-wrapper {
-    padding-top: 150px;
+    position: fixed;
+    bottom: 15%;
 }
 
 #options-dropdown {

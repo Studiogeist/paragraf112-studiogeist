@@ -94,24 +94,25 @@ input[type="radio"] {
 input[type="radio"]+label::before {
     content: "";
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
-    border: 2px solid #221F1F;
-    margin-right: 10px;
+    border: 1.5px solid #221F1F;
+    margin-right: 5px;
     vertical-align: middle;
     transition: transform 0.2s ease-in-out;
 }
 
 /* Knappstyling (Musepeker over) */
 input[type="radio"]:hover+label::before {
-    background-color: var(--gronn);
-    border: 2px solid #221F1F;
+    background-color: #ACFFAA;
+    border: 1.5px solid #221F1F;
 }
 
 /* Knappstyling (Valgt) */
 input[type="radio"]:checked+label::before {
     background-color: var(--gronn);
+    border: 1.5px solid #221F1F;
 }
 
 button {
@@ -137,7 +138,7 @@ button:hover {
     display: flex;
     align-items: center;
     gap: 5px;
-    line-height: 0;
+    line-height: 14px;
     margin-bottom: 5px;
     text-transform: uppercase;
 }
@@ -188,7 +189,7 @@ margin-bottom: 20px;
 }
 
 .p-112 {
-    font-size: 14px;
+    font-size: 18px;
     margin-top: 20px;
 }
 

@@ -129,6 +129,7 @@ button:hover {
     background-color: #221F1F;
     color: white;
     transition: 0.3s;
+    cursor: pointer;
 }
 
 .option-heading {

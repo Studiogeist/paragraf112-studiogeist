@@ -145,6 +145,19 @@ button:hover {
 
 .heading-112 {
     font-size: 32px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.heading-112::after {
+    content: 'Beta';
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: var(--gronn);
+    color: #212529;
+    display: inline-block;
 }
 
 .button-wrapper {
@@ -177,6 +190,12 @@ margin-bottom: 20px;
 .p-112 {
     font-size: 14px;
     margin-top: 20px;
+}
+
+.p-112-desc {
+    font-size: 12px;
+    color: #aeaeae;
+    margin-top: 10px;
 }
 
 .tooltip {

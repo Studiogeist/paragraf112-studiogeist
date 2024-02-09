@@ -11,9 +11,11 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=block" rel="stylesheet">
-<script src="https://code.iconify.design/iconify-icon/2.0.0/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=block"
+        rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/2.0.0/iconify-icon.min.js"></script>
 </head>
 
 <body>
@@ -21,17 +23,17 @@
     <div class="p112-wrapper">
         <div class="option-wrapper">
             <div class="option-container">
-                <div class="heading-112">
-                    §112 (V0.1)
+                <div class="heading-wrapper">
+                    <div class="heading-112">
+                        §112
+                    </div>
                     <div class="p-112">
 
-                        Dette er en midlertidig betatest under utvikling.<br><br>
-                        
                         Her kan du generere din egen versjon av logoen.
-                                            </div>
+                    </div>
                 </div>
 
-                
+
                 <div class="option-format">
                     <div class="option-heading">Forhåndsinnstillinger</div>
                     <select id="options-dropdown">
@@ -40,9 +42,12 @@
                         <option value="variant3">Variant 3</option>
                     </select>
                     <div class="option-heading">Oppybygging<div class="tooltip">
-                        <iconify-icon icon="material-symbols-light:info-outline" width="24" height="24"></iconify-icon>
-                        <div class="tooltiptext">Du kan velge mellom en forenklet versjon som er lettere å lese, eller en som har større underholdningsverdi.</div>
-                    </div></div>
+                            <iconify-icon icon="material-symbols-light:info-outline" width="24"
+                                height="24"></iconify-icon>
+                            <div class="tooltiptext">Du kan velge mellom en forenklet versjon som er lettere å lese,
+                                eller en som har større underholdningsverdi.</div>
+                        </div>
+                    </div>
                     <div class="radio-wrapper">
                         <input type="radio" id="lett" name="lesbarhet" value="lett">
                         <label for="lett">Forenklet</label>
@@ -55,7 +60,11 @@
                 <div class="option-format">
                     <button onclick="exportSVG()">Last ned SVG</button>
                     <button onclick="exportPNG()">Last ned PNG</button>
+                    <div class="p-112-desc">
+                        Versjon 0.01
+                    </div>
                 </div>
+
             </div>
         </div>
         <div class="logo-wrapper">
@@ -63,16 +72,18 @@
                 <!-- SVG placeholders will be added here -->
             </div>
             <div class="button-wrapper">
-            <button onclick="generateLogo()">Ny variant <iconify-icon icon="material-symbols-light:arrow-split-rounded" width="28" height="28"></iconify-icon></button>
-        </div>            
+                <button onclick="generateLogo()">Ny variant <iconify-icon
+                        icon="material-symbols-light:arrow-split-rounded" width="28"
+                        height="28"></iconify-icon></button>
+            </div>
         </div>
     </div>
-    
+
     </div>
     <script>
         const logoContainer = document.getElementById('logo-container');
         const svgFiles = [
-        '1-SMALL-V1.svg',
+            '1-SMALL-V1.svg',
             '1-SMALL-V2.svg',
             '1-SMALL-V3.svg',
             '1-SMALL-V4.svg',
@@ -127,7 +138,7 @@
             const filteredFiles = svgFiles.filter(file => file.startsWith(startingWith));
             return filteredFiles[Math.floor(Math.random() * filteredFiles.length)];
         }
-        
+
 
         function generateLogo() {
             currentLogo[0] = getRandomSVG('1');
@@ -141,29 +152,29 @@
         }
 
         function displayLogo() {
-    // Clear previous SVGs
-    logoContainer.innerHTML = '';
+            // Clear previous SVGs
+            logoContainer.innerHTML = '';
 
-    // Add background SVG
-    const bgContainer = document.createElement('div');
-    bgContainer.className = 'svg-container-bg';
-    const bgElement = document.createElement('object');
-    bgElement.data = 'assets/LOGO-BG.svg'; // Replace with the path to your background SVG
-    bgElement.type = 'image/svg+xml';
-    bgContainer.appendChild(bgElement);
-    logoContainer.appendChild(bgContainer);
+            // Add background SVG
+            const bgContainer = document.createElement('div');
+            bgContainer.className = 'svg-container-bg';
+            const bgElement = document.createElement('object');
+            bgElement.data = 'assets/LOGO-BG.svg'; // Replace with the path to your background SVG
+            bgElement.type = 'image/svg+xml';
+            bgContainer.appendChild(bgElement);
+            logoContainer.appendChild(bgContainer);
 
-    // Add generated SVGs (numbers) on top
-    currentLogo.forEach((svgFile) => {
-        const svgContainer = document.createElement('div');
-        svgContainer.className = 'svg-container';
-        const svgElement = document.createElement('object');
-        svgElement.data = 'assets/' + svgFile;
-        svgElement.type = 'image/svg+xml';
-        svgContainer.appendChild(svgElement);
-        logoContainer.appendChild(svgContainer);
-    });
-}
+            // Add generated SVGs (numbers) on top
+            currentLogo.forEach((svgFile) => {
+                const svgContainer = document.createElement('div');
+                svgContainer.className = 'svg-container';
+                const svgElement = document.createElement('object');
+                svgElement.data = 'assets/' + svgFile;
+                svgElement.type = 'image/svg+xml';
+                svgContainer.appendChild(svgElement);
+                logoContainer.appendChild(svgContainer);
+            });
+        }
 
 
         // Function to export SVG

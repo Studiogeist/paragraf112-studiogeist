@@ -98,7 +98,7 @@ input[type="radio"]+label::before {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    outline: 2px solid #221F1F;
+    border: 2px solid #221F1F;
     margin-right: 10px;
     vertical-align: middle;
     transition: transform 0.2s ease-in-out;
@@ -107,13 +107,12 @@ input[type="radio"]+label::before {
 /* Knappstyling (Musepeker over) */
 input[type="radio"]:hover+label::before {
     background-color: var(--gronn);
-    outline: 2px solid #221F1F;
+    border: 2px solid #221F1F;
 }
 
 /* Knappstyling (Valgt) */
 input[type="radio"]:checked+label::before {
     background-color: var(--gronn);
-    transform: scale(1.2);
 }
 
 button {
@@ -134,13 +133,14 @@ button:hover {
 
 .option-heading {
     color: #aeaeae;
+    letter-spacing: 0.5px;
     font-size: 14px;
-    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 5px;
     line-height: 0;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
 }
 
 .heading-112 {
@@ -190,9 +190,10 @@ margin-bottom: 20px;
     background-color: #221F1F;
     color: #fff;
     text-transform: none;
-    border-radius: 6px;
+    border-radius: 10px;
     padding: 15px;
-    line-height: 20px;
+    line-height: 18px;
+    letter-spacing: 0;
     position: absolute;
     z-index: 1;
     opacity: 1!important;

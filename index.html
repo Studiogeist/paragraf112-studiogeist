@@ -68,7 +68,7 @@ body {
             color: black;
             text-decoration: none;
             margin-top: 10px;
-            padding: 8px;
+            padding: 8px 16px;
             outline: 1px solid black;
             border-radius: 5px;
         }
@@ -87,14 +87,13 @@ body {
 <div class="button-container">
     <button onclick="nextVariant()">Ny variant</button>
     <select id="colorSelector" onchange="changeColor()">
-        <option value="Vanlig">Vanlig</option>
+        <option value="Vanlig">Grønn</option>
         <option value="Sort">Sort</option>
         <option value="Hvit">Hvit</option>
     </select>
 </div>
 
 <div class="download-links">
-    Velg format:
     <a id="download-svg" href="01-Vanlig.svg" download="logo.svg">Last ned SVG (Vektor)</a>
     <a id="download-png" href="#" onclick="downloadPNG()">Last ned PNG (Bilde)</a>
 </div>

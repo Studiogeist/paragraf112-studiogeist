@@ -1,276 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>112 - Studiogeist</title>
-    <link rel="apple-touch-icon" sizes="180x180" href="general-assets/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="general-assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="general-assets/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=block"
-        rel="stylesheet">
-    <script src="https://code.iconify.design/iconify-icon/2.0.0/iconify-icon.min.js"></script>
+    <title>Logo Viewer</title>
+    <style>
+        #logo-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #logo {
+            max-width: 100%;
+            height: auto;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .download-links {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
 </head>
-
 <body>
 
-    <div class="p112-wrapper">
-        <div class="option-wrapper">
-            <div class="option-container">
-                <div class="heading-wrapper">
-                    <div class="heading-112">
-                        §112
-                    </div>
-                    <div class="p-112">
+<div id="logo-container">
+    <img id="logo" src="01-Vanlig.svg" alt="Logo">
+</div>
 
-                        Her kan du generere din egen versjon av logoen.
-                    </div>
-                </div>
+<div class="button-container">
+    <button onclick="nextVariant()">Ny variant</button>
+    <select id="colorSelector" onchange="changeColor()">
+        <option value="Vanlig">Vanlig</option>
+        <option value="Sort">Sort</option>
+        <option value="Hvit">Hvit</option>
+    </select>
+</div>
 
+<div class="download-links">
+    <a id="download-svg" href="01-Vanlig.svg" download="logo.svg">Download SVG</a>
+    <a id="download-png" href="#" onclick="downloadPNG()">Download PNG</a>
+</div>
 
-                <div class="option-format">
-                    <div class="option-heading">Forhåndsinnstillinger</div>
-                    <select id="options-dropdown">
-                        <option value="variant1">Variant 1</option>
-                        <option value="variant2">Variant 2</option>
-                        <option value="variant3">Variant 3</option>
-                    </select>
-                    <div class="option-heading">Oppybygging<div class="tooltip">
-                        <iconify-icon icon="material-symbols:info-outline" width="24"
-                                height="24"></iconify-icon>
-                            <div class="tooltiptext">Du kan velge mellom en forenklet versjon som er lettere å lese,
-                                eller en som har større underholdningsverdi.</div>
-                        </div>
-                    </div>
-                    <div class="radio-wrapper">
-                        <input type="radio" id="lett" name="lesbarhet" value="lett">
-                        <label for="lett">Forenklet</label>
-                    </div>
-                    <div class="radio-wrapper">
-                        <input type="radio" id="utfordrende" name="lesbarhet" value="utfordrende">
-                        <label for="utfordrende">Utfordrende</label>
-                    </div>
-                </div>
-                <div class="option-format">
-                    <button onclick="exportSVG()">Last ned SVG</button>
-                    <button onclick="exportPNG()">Last ned PNG</button>
-                    <div class="p-112-desc">
-                        Versjon 0.01
-                    </div>
-                </div>
+<script>
+    let variantIndex = 1;
+    let color = 'Vanlig';
+    const totalVariants = 12;
 
-            </div>
-        </div>
-        <div class="logo-wrapper">
-            <div id="logo-container">
-                <!-- SVG placeholders will be added here -->
-            </div>
-            <div class="button-wrapper">
-                <button onclick="generateLogo()">Ny variant <iconify-icon
-                        icon="material-symbols-light:arrow-split-rounded" width="28"
-                        height="28"></iconify-icon></button>
-            </div>
-        </div>
-    </div>
+    function nextVariant() {
+        variantIndex = (variantIndex % totalVariants) + 1;
+        updateLogo();
+    }
 
-    </div>
-    <script>
-        const logoContainer = document.getElementById('logo-container');
-        const svgFiles = [
-            '1-SMALL-V1.svg',
-            '1-SMALL-V2.svg',
-            '1-SMALL-V3.svg',
-            '1-SMALL-V4.svg',
-            '1-SMALL-V5.svg',
-            '1-SMALL-V6.svg',
-            '1-MEDIUM-V12.svg',
-            '1-MEDIUM-V11.svg',
-            '1-MEDIUM-V10.svg',
-            '1-MEDIUM-V9.svg',
-            '1-MEDIUM-V8.svg',
-            '1-MEDIUM-V7.svg',
-            '1-MEDIUM-V6.svg',
-            '1-MEDIUM-V5.svg',
-            '1-MEDIUM-V4.svg',
-            '1-MEDIUM-V3.svg',
-            '1-MEDIUM-V2.svg',
-            '1-MEDIUM-V1.svg',
-            '1-LARGE-V1.svg',
-            '1-LARGE-V2.svg',
-            '1-LARGE-V3.svg',
-            '1-LARGE-V4.svg',
-            '1-LARGE-V5.svg',
-            '2-MEDIUM-V9.svg',
-            '2-MEDIUM-V8.svg',
-            '2-MEDIUM-V7.svg',
-            '2-MEDIUM-V6.svg',
-            '2-MEDIUM-V5.svg',
-            '2-MEDIUM-V4.svg',
-            '2-MEDIUM-V3.svg',
-            '2-MEDIUM-V2.svg',
-            '2-MEDIUM-V1.svg',
-            '2-SMALL-V1.svg',
-            '2-LARGE-V14.svg',
-            '2-LARGE-V13.svg',
-            '2-LARGE-V12.svg',
-            '2-LARGE-V11.svg',
-            '2-LARGE-V10.svg',
-            '2-LARGE-V9.svg',
-            '2-LARGE-V8.svg',
-            '2-LARGE-V7.svg',
-            '2-LARGE-V6.svg',
-            '2-LARGE-V5.svg',
-            '2-LARGE-V4.svg',
-            '2-LARGE-V3.svg',
-            '2-LARGE-V2.svg',
-            '2-LARGE-V1.svg'
-        ];
+    function changeColor() {
+        color = document.getElementById('colorSelector').value;
+        updateLogo();
+    }
 
-        let currentLogo = ['', '', ''];
+    function updateLogo() {
+        const filename = `${variantIndex.toString().padStart(2, '0')}-${color}.svg`;
+        document.getElementById('logo').src = filename;
+        document.getElementById('download-svg').href = filename;
+        document.getElementById('download-svg').download = filename;
+    }
 
-        function getRandomSVG(startingWith) {
-            const filteredFiles = svgFiles.filter(file => file.startsWith(startingWith));
-            return filteredFiles[Math.floor(Math.random() * filteredFiles.length)];
-        }
+    function downloadPNG() {
+        const svgElement = document.getElementById('logo');
+        fetch(svgElement.src)
+            .then(response => response.text())
+            .then(svgText => {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                const image = new Image();
 
+                const svgBlob = new Blob([svgText], {type: 'image/svg+xml;charset=utf-8'});
+                const url = URL.createObjectURL(svgBlob);
 
-        function generateLogo() {
-            currentLogo[0] = getRandomSVG('1');
-            currentLogo[1] = getRandomSVG('1');
-            while (currentLogo[1] === currentLogo[0]) {
-                currentLogo[1] = getRandomSVG('1');
-            }
-            currentLogo[2] = getRandomSVG('2');
+                image.onload = () => {
+                    const scaleFactor = 2;  // Increase this value to enhance the resolution
+                    const width = image.width * scaleFactor;
+                    const height = image.height * scaleFactor;
 
-            displayLogo();
-        }
+                    canvas.width = width;
+                    canvas.height = height;
+                    context.drawImage(image, 0, 0, width, height);
+                    URL.revokeObjectURL(url);
 
-        function displayLogo() {
-            // Clear previous SVGs
-            logoContainer.innerHTML = '';
-
-            // Add background SVG
-            const bgContainer = document.createElement('div');
-            bgContainer.className = 'svg-container-bg';
-            const bgElement = document.createElement('object');
-            bgElement.data = 'assets/LOGO-BG.svg'; // Replace with the path to your background SVG
-            bgElement.type = 'image/svg+xml';
-            bgContainer.appendChild(bgElement);
-            logoContainer.appendChild(bgContainer);
-
-            // Add generated SVGs (numbers) on top
-            currentLogo.forEach((svgFile) => {
-                const svgContainer = document.createElement('div');
-                svgContainer.className = 'svg-container';
-                const svgElement = document.createElement('object');
-                svgElement.data = 'assets/' + svgFile;
-                svgElement.type = 'image/svg+xml';
-                svgContainer.appendChild(svgElement);
-                logoContainer.appendChild(svgContainer);
+                    canvas.toBlob(blob => {
+                        const a = document.createElement('a');
+                        a.href = URL.createObjectURL(blob);
+                        a.download = `${variantIndex.toString().padStart(2, '0')}-${color}.png`;
+                        a.click();
+                    }, 'image/png');
+                };
+                image.src = url;
             });
-        }
+    }
+</script>
 
-
-        // Function to export SVG
-        function exportSVG() {
-            // Select all elements with the class 'svg-container' within the 'logoContainer'
-            const svgContainers = Array.from(logoContainer.querySelectorAll('.svg-container'));
-
-            // Calculate the total width of the resulting SVG
-            const svgWidth = svgContainers.length * 100 + (svgContainers.length - 1) * 5; // Assuming each container has a width of 100 units and a gap of 5 units
-
-            // Map each SVG container to its transformed content
-            const svgElements = svgContainers.map((svgContainer, index) => {
-                // Extract the inner HTML content of the SVG from the 'object' element inside each 'svg-container'
-                const svgContent = svgContainer.querySelector('object').contentDocument.documentElement.innerHTML;
-                // Calculate the horizontal translation for each SVG container
-                const translationX = index * (100 + 5); // Assuming each container has a width of 100 units and a gap of 5 units
-                // Create a group element with a transform attribute to position each SVG horizontally
-                return `<g transform="translate(${translationX}, 0)">${svgContent}</g>`;
-            }).join('\n'); // Join the array of SVG elements into a single string with line breaks
-
-            // Concatenate the SVG elements into a complete SVG document
-            const concatenatedSVG = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-        <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 ${svgWidth} 75" preserveAspectRatio="xMinYMin meet">
-            ${svgElements}
-        </svg>`;
-
-            // Create a Blob containing the SVG data
-            const blob = new Blob([concatenatedSVG], { type: 'image/svg+xml' });
-            // Create a URL for the Blob
-            const url = URL.createObjectURL(blob);
-
-            // Create a link element
-            const a = document.createElement('a');
-            // Set the link's href attribute to the SVG URL
-            a.href = url;
-            // Set the download attribute to specify the default file name
-            a.download = '112-din-logovariant.svg';
-            // Append the link to the document body
-            document.body.appendChild(a);
-            // Simulate a click on the link to trigger the download
-            a.click();
-            // Remove the link element from the document body
-            document.body.removeChild(a);
-            // Revoke the URL to free up resources
-            URL.revokeObjectURL(url);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        function exportPNG() {
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            const images = currentLogo.map(svgFile => new Image());
-
-            // Load each SVG as an image
-            Promise.all(currentLogo.map((svgFile, index) => {
-                return new Promise(resolve => {
-                    images[index].onload = () => resolve();
-                    images[index].src = 'assets/' + svgFile;
-                });
-            })).then(() => {
-                canvas.width = images.reduce((width, image) => Math.max(width, image.width), 0);
-                canvas.height = images.reduce((height, image) => height + image.height, 0);
-
-                let yOffset = 0;
-                images.forEach(image => {
-                    context.drawImage(image, 0, yOffset);
-                    yOffset += image.height;
-                });
-
-                const url = canvas.toDataURL('image/png');
-
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'logo.png';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            });
-        }
-
-        // Initial generation
-        generateLogo();
-    </script>
 </body>
-
 </html>
